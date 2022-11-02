@@ -16,8 +16,24 @@ class App extends React.Component {
   filter: '',
   }
 
-  formSubmitHendler = data => { 
+    componentDidMount() { 
+    const contacts = localStorage.getItem('contacts')
+    const parsedContacts = JSON.parse(contacts)
 
+    if (parsedContacts) { 
+      this.setState({contacts: parsedContacts})
+    }
+    
+  }
+
+  componentDidUpdate(prevProps, prevState) { 
+    if (this.state.contacts !== prevState.contacts) { 
+      
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+    }
+  }
+
+  formSubmitHendler = data => { 
     const oldName = this.state.contacts.map(contact => contact.name);
     if (oldName.includes(data.name)) {
       return alert(`${data.name} is already in contacts`);
@@ -42,6 +58,8 @@ class App extends React.Component {
       contacts: prevState.contacts.filter(contact => contact.id !== contactId)
     }));
   };
+
+
 
   render() { 
     const { filter } = this.state;
