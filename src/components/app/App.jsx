@@ -45,8 +45,9 @@ class App extends React.Component {
     }
     
     this.setState(prevState => ({
-      contacts:[contact, ...prevState.contacts]
-    }))
+      contacts: [contact, ...prevState.contacts]
+    }));
+    return true;
   }
 
   changeFilter = (e) => {
